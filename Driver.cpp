@@ -50,6 +50,7 @@ int main() {
             PixelPuzzle testPuz = PixelPuzzle();
 
             testPuz.runInductiveFill();
+            testPuz.printLine();
         }
 
         running = false;

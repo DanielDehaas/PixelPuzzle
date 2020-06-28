@@ -17,7 +17,7 @@ public:
     int getOrder()                  const {return this->order;};
     std::vector<int> getSegments()  const {return this->segments;};
     std::vector<std::vector<int> > getSegmentSolutionSpace()    const {return this->segmentSolutionSpace;};
-    std::vector<unsigned short int> getLineInProgress()         const {return this->lineInProgress;};
+    std::vector<int> getLineInProgress()         const {return this->lineInProgress;};
 
     // mutators
     void setDimension(int lineLength) {dimension = lineLength;};
@@ -28,7 +28,7 @@ public:
     void printLine();
 
 
-    std::vector<unsigned short int> inductiveSegmentFill();
+    std::vector<int> inductiveSegmentFill();
 
 private:
     // fields
@@ -37,7 +37,7 @@ private:
     int order;
     std::vector<int> segments;
     std::vector<std::vector<int> > segmentSolutionSpace;
-    std::vector<unsigned short int> lineInProgress;
+    std::vector<int> lineInProgress;
 
     // member functions
     std::vector<std::vector< int > > initializeBlockSpace(int lineLength, std::vector<int> blockSize);

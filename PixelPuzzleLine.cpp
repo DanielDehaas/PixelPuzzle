@@ -5,7 +5,7 @@
 PixelPuzzleLine::PixelPuzzleLine()
 {
     const int defaultSize = 8;
-    bool defaultDirection = false; // 0 is column 1 is row
+    bool defaultDirection = false; // false is row, true is column
     int defaultOrder = 0;
     std::vector<int> zeroBlock = {0};
     //std::vector<std::vector<int> > zeroBlockSpace { {0,0,0,0,0,0,0,0} };
@@ -15,7 +15,7 @@ PixelPuzzleLine::PixelPuzzleLine()
     this->order     = defaultOrder;
     this->segments  = zeroBlock;
     this->segmentSolutionSpace = initializeBlockSpace(defaultSize, zeroBlock);
-    this->lineInProgress = std::vector<unsigned short int>(defaultSize, 2);
+    this->lineInProgress = std::vector<int>(defaultSize, -1);
 }
 
 /**
@@ -29,7 +29,7 @@ PixelPuzzleLine::PixelPuzzleLine(int lineLength, bool dir, int rank, std::vector
     this->order     = rank;
     this->segments  = blockSize;
     this->segmentSolutionSpace = initializeBlockSpace(lineLength, blockSize);
-    this->lineInProgress = std::vector<unsigned short int>(lineLength, 2);
+    this->lineInProgress = std::vector<int>(lineLength, -1);
 }
 
 /**
@@ -77,12 +77,14 @@ std::vector<std::vector< int > > PixelPuzzleLine::initializeBlockSpace(int lineL
 }
 
 /**
- * //TODO: change return to changed flag bool type
  * Inductively fills cels which have to be filled.
- * This is done by
- * 
+ * This is done by checking that the segment is at least half the size of its
+ * solution space. Hypothetically placing the segment at the leftmost and rightmost
+ * positions in its solution space will then create an overlapping area. This overlapping 
+ * span may be induced to be necessary. 
+ * @return: this->lineInProgress so that the puzzle may update its filled cels
  */
-std::vector<unsigned short int> PixelPuzzleLine::inductiveSegmentFill()
+std::vector<int> PixelPuzzleLine::inductiveSegmentFill()
 {
     // int dimension;
     // std::vector<int> segments;                              //
@@ -108,7 +110,6 @@ std::vector<unsigned short int> PixelPuzzleLine::inductiveSegmentFill()
     // }
     // std::cout << " fin" << std::endl;
     return this->lineInProgress;
-    
 }
 
 /**
@@ -157,11 +158,4 @@ void PixelPuzzleLine::printLine()
         }
         std::cout << std::endl;
     }
-
-    // std::cout << "testing vector.back(): " << std::endl;
-    // for (uint i = 0; i < this->segmentSolutionSpace.size(); i++) {
-    //     std::cout << this->segments[i] << ": ";
-    //     std::cout << this->segmentSolutionSpace[i].back() << ", ";
-    //     std::cout << std::endl;
-    // }
 }

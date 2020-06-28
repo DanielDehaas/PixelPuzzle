@@ -27,7 +27,7 @@ public:
     void setRowSolutionSpace (std::vector<PixelPuzzleLine> rows) {rowSolutionSpace = rows;};
 
     void runInductiveFill();
-    void printLine(std::vector<unsigned short int>);
+    void printLine();
 private:
     int dimensions;
     std::vector<PixelPuzzleLine>    columnSolutionSpace;
@@ -38,10 +38,7 @@ private:
     // member functions
     void updateSolutionSpace(bool direction, int order, std::vector<int>);
 
-    //solvers
-    
-
-    
+    //solvers  
 
 };
 
