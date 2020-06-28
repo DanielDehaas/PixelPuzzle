@@ -30,10 +30,10 @@ public:
     void printLine(std::vector<unsigned short int>);
 private:
     int dimensions;
-    std::vector<PixelPuzzleLine> columnSolutionSpace;
-    std::vector<PixelPuzzleLine> rowSolutionSpace;
-    std::vector<bool> solution;
-    std::vector<int> exes;
+    std::vector<PixelPuzzleLine>    columnSolutionSpace;
+    std::vector<PixelPuzzleLine>    rowSolutionSpace;
+    std::vector<std::vector<int>>   solution;
+    //std::vector<int> exes;
 
     // member functions
     void updateSolutionSpace(bool direction, int order, std::vector<int>);

@@ -90,23 +90,23 @@ std::vector<unsigned short int> PixelPuzzleLine::inductiveSegmentFill()
     // std::vector<unsigned short int> lineInProgress;         //
 //    bool changes = false;
     for(uint i = 0; i < this->segments.size(); i++) {
-        std::cout << i << ": ";
+        //std::cout << i << ": ";
         if (this->segments[i] > (int)(this->segmentSolutionSpace[i].size() / 2) ) {
 //            changes = true;
             int endBuffer = this->dimension - this->segments[i];
             int leftBound = this->segmentSolutionSpace[i][0] + endBuffer;
             int rightBound = this->segmentSolutionSpace[i].back() - endBuffer;
-            std::cout << endBuffer << " eb, " << leftBound << " lb, " << rightBound << " rb" << std::endl;
+            //std::cout << endBuffer << " eb, " << leftBound << " lb, " << rightBound << " rb" << std::endl;
             for (int cel = leftBound; cel <= rightBound; cel++) {
                 this->lineInProgress[cel] = 1;
             }
         }
     }
-    std::cout << "l.i.p.: ";
-    for (uint i = 0; i < this->lineInProgress.size(); i++) {
-        std::cout << this->lineInProgress[i] << " ";
-    }
-    std::cout << " fin" << std::endl;
+    // std::cout << "l.i.p.: ";
+    // for (uint i = 0; i < this->lineInProgress.size(); i++) {
+    //     std::cout << this->lineInProgress[i] << " ";
+    // }
+    // std::cout << " fin" << std::endl;
     return this->lineInProgress;
     
 }
