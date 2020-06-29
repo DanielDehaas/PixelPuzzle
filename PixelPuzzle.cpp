@@ -52,30 +52,54 @@ PixelPuzzle::PixelPuzzle(int puzzleDimensions, std::vector<std::vector<int>> col
  */
 void PixelPuzzle::runInductiveFill()
 {
-    for (int i = 0; i < this->dimensions; i++) {
-// ------pseudo code for intersecting fill
-/*       std::vector<int> tempLIP = this->rowSolutionSpace[i].getLineInProgress;
-        if (tempLIP != this->rowSolutionSpace[i].inductiveSegmentFill()) {
-                this->updateSolutionSpace(this->rowSolutionSpace[i].getDirection(), 
-                                       this->rowSolutionSpace[i].getOrder(), 
-                                        this->rowSolutionSpace[i].getLineInProgress());
-                for(i = 0; i < this->dimensions; i++) {
-                    if (tempLip[i] != this->rowSolutionSpace[i].getLineInProgress()[i]) {
-                        update cell in perpendicular line
-                    }
+    for (uint row = 0; row < this->rowSolutionSpace.size(); row++) {
+        std::vector<int> tempLIP = this->rowSolutionSpace[row].getLineInProgress();
+        if (tempLIP != this->rowSolutionSpace[row].inductiveSegmentFill()) {
+            this->updateSolutionSpace(this->rowSolutionSpace[row].getDirection(), 
+                                    this->rowSolutionSpace[row].getOrder(), 
+                                    this->rowSolutionSpace[row].getLineInProgress());
+            for(int rowCel = 0; rowCel < this->dimensions; rowCel++) {
+                if (tempLIP[rowCel] != this->rowSolutionSpace[rowCel].getLineInProgress()[rowCel]) {
+                    // 
+                    std::cout << "row " << row << std::endl;
+                    printVector(tempLIP);
+                    std::cout << std::endl;
+                    printVector(this->rowSolutionSpace[rowCel].getLineInProgress());
+                    std::cout << std::endl;
+                    this->columnSolutionSpace[rowCel].setLineInProgressCel(this->rowSolutionSpace[row].getOrder());
                 }
+            }
         }
-*/
-        this->rowSolutionSpace[i].inductiveSegmentFill();
-        this->updateSolutionSpace(this->rowSolutionSpace[i].getDirection(), 
-                                    this->rowSolutionSpace[i].getOrder(), 
-                                    this->rowSolutionSpace[i].getLineInProgress());
+
+        // this->rowSolutionSpace[i].inductiveSegmentFill();
+        // this->updateSolutionSpace(this->rowSolutionSpace[i].getDirection(), 
+        //                             this->rowSolutionSpace[i].getOrder(), 
+        //                             this->rowSolutionSpace[i].getLineInProgress());
     }
-    for (int i = 0; i < this->dimensions; i++) {
-        this->columnSolutionSpace[i].inductiveSegmentFill();
-        this->updateSolutionSpace(this->columnSolutionSpace[i].getDirection(), 
-                                    this->columnSolutionSpace[i].getOrder(), 
-                                    this->columnSolutionSpace[i].getLineInProgress());
+
+    for (uint column = 0; column < this->columnSolutionSpace.size(); column++) {
+        std::vector<int> tempLIP(this->columnSolutionSpace[column].getLineInProgress());
+        if (tempLIP != this->columnSolutionSpace[column].inductiveSegmentFill()) {
+            this->updateSolutionSpace(this->columnSolutionSpace[column].getDirection(), 
+                                    this->columnSolutionSpace[column].getOrder(), 
+                                    this->columnSolutionSpace[column].getLineInProgress());
+            for(int columnCel = 0; columnCel < this->dimensions; columnCel++) {
+                if (tempLIP[columnCel] != this->columnSolutionSpace[columnCel].getLineInProgress()[columnCel]) {
+                    // 
+                    std::cout << "column " << column << std::endl;
+                    printVector(tempLIP);
+                    std::cout << std::endl;
+                    printVector(this->columnSolutionSpace[columnCel].getLineInProgress());
+                    std::cout << std::endl;
+                    this->rowSolutionSpace[columnCel].setLineInProgressCel(this->columnSolutionSpace[column].getOrder());
+                }
+            }
+        }
+
+        // this->columnSolutionSpace[i].inductiveSegmentFill();
+        // this->updateSolutionSpace(this->columnSolutionSpace[i].getDirection(), 
+        //                             this->columnSolutionSpace[i].getOrder(), 
+        //                             this->columnSolutionSpace[i].getLineInProgress());
     }
 }
 
@@ -98,8 +122,9 @@ void PixelPuzzle::updateSolutionSpace(bool direction, int order, std::vector<int
     }
 }
 
-void PixelPuzzle::printLine() 
+void PixelPuzzle::printLines() 
 {
+    std::cout << "Printing Puzzle Solution Space" << std::endl;
     for (uint i = 0; i < this->solution.size(); i++) {
         for (uint j = 0; j < this->solution.size(); j++) {
             if (solution[i][j] != -1 ) {
@@ -109,4 +134,37 @@ void PixelPuzzle::printLine()
         }
         std::cout << std::endl;
     }
+
+    std::cout << "\nPrinting Puzzle Solution Space using line class" << std::endl;
+    for (uint i = 0; i < this->rowSolutionSpace.size(); i++) {
+        std::vector<int> liner = this->rowSolutionSpace[i].getLineInProgress();
+        for (uint j = 0; j < liner.size(); j++) {
+            if (liner[j] != -1) {
+                std::cout << " ";
+            }
+            std::cout << liner[j] << " ";
+        }
+        std::cout << std::endl;
+    }
+
+    std::cout << "\nPrinting Puzzle Solution Space using line class" << std::endl;
+    for (uint i = 0; i < this->columnSolutionSpace.size(); i++) {
+        std::vector<int> liner = this->columnSolutionSpace[i].getLineInProgress();
+        for (uint j = 0; j < liner.size(); j++) {
+            if (liner[j] != -1) {
+                std::cout << " ";
+            }
+            std::cout << liner[j] << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+void PixelPuzzle::printVector(std::vector<int> liner) {
+        for (uint j = 0; j < liner.size(); j++) {
+            if (liner[j] != -1) {
+                std::cout << " ";
+            }
+            std::cout << liner[j] << " ";
+        }
 }

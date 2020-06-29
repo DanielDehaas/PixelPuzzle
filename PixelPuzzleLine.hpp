@@ -8,6 +8,7 @@
 class PixelPuzzleLine
 {
 public:
+    // Constructors
     PixelPuzzleLine();
     PixelPuzzleLine(int lineLength, bool dir, int rank, std::vector<int> blockSize);
 
@@ -22,10 +23,10 @@ public:
     // mutators
     void setDimension(int lineLength) {dimension = lineLength;};
     void setSegments(std::vector<int> blockSize) {segments = blockSize;};
+    void setLineInProgressCel(int index) {this->lineInProgress[index] = 1;};
     //void setSegmentSolutionSpace(std::vector<std::vector<int> > blocks) {segmentSolutionSpace = blocks;};
 
-    
-    void printLine();
+    void printLineInfo();
 
 
     std::vector<int> inductiveSegmentFill();

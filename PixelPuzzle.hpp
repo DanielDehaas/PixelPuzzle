@@ -9,9 +9,9 @@
 class PixelPuzzle
 {
 public:
+    // Constructors
     PixelPuzzle();
     PixelPuzzle(int puzzleDimensions, std::vector<std::vector<int>> columns, std::vector<std::vector<int>> rows);
-
 
     //TODO: rewrite setters/getters
     // accessors
@@ -27,7 +27,7 @@ public:
     void setRowSolutionSpace (std::vector<PixelPuzzleLine> rows) {rowSolutionSpace = rows;};
 
     void runInductiveFill();
-    void printLine();
+    void printLines();
 private:
     int dimensions;
     std::vector<PixelPuzzleLine>    columnSolutionSpace;
@@ -37,7 +37,7 @@ private:
 
     // member functions
     void updateSolutionSpace(bool direction, int order, std::vector<int>);
-
+    void printVector(std::vector<int> liner);
     //solvers  
 
 };

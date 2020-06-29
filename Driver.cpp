@@ -37,11 +37,11 @@ int main() {
             //std::vector<std::vector<int> > TEST_VEC2D;
 
             PixelPuzzleLine testLineDefault  = PixelPuzzleLine();
-            testLineDefault.printLine();
+            testLineDefault.printLineInfo();
             std::cout << std::endl;
 
             PixelPuzzleLine testLine  = PixelPuzzleLine(TEST_DIMENSIONS, true, 3, TEST_VEC);
-            testLine.printLine();
+            testLine.printLineInfo();
             std::cout << std::endl;
 
 
@@ -50,7 +50,7 @@ int main() {
             PixelPuzzle testPuz = PixelPuzzle();
 
             testPuz.runInductiveFill();
-            testPuz.printLine();
+            testPuz.printLines();
         }
 
         running = false;

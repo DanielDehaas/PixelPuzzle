@@ -116,7 +116,7 @@ std::vector<int> PixelPuzzleLine::inductiveSegmentFill()
  * TODO: break this into smaller pieces
  * Function to print all the information about the line - mostly for development
  */
-void PixelPuzzleLine::printLine()
+void PixelPuzzleLine::printLineInfo()
 {
     std::string singleOrPlural;
     if (this->segments.size() == 1 && this->segments[0] != 0) {
