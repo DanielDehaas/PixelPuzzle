@@ -42,39 +42,35 @@ PixelPuzzle::PixelPuzzle(int puzzleDimensions, std::vector<std::vector<int>> col
 }
 
 /**
- * TODO: this should be updated with a call to have intersecting cels filled in the perpendicular column/row
- *          currently this logic is only handled in the puzzles update solution space -
- *       This could be done by comparing the lineInProgress before and after running inductiveSegmentFill - 
- *          if there is a difference then the perpendicular line would be updated.
- *       THe wrong way to do this seems to be to compare all rows with all columns after runInductiveFill completes
  * Has each line run inductive fill
- * Loops through row and column spaces and updates the working solution
+ * Loops through row and column spaces and updates the working solution for the puzzle 
+ * Also calls the line's updateLineInProgress function to update the cel for the perpendicular line
  */
 void PixelPuzzle::runInductiveFill()
 {
     for (uint row = 0; row < this->rowSolutionSpace.size(); row++) {
         std::vector<int> tempLIP = this->rowSolutionSpace[row].getLineInProgress();
+        printVector(tempLIP);
+        std::cout << std::endl;
+        printVector(this->rowSolutionSpace[row].getLineInProgress());
+        std::cout << std::endl;
         if (tempLIP != this->rowSolutionSpace[row].inductiveSegmentFill()) {
             this->updateSolutionSpace(this->rowSolutionSpace[row].getDirection(), 
                                     this->rowSolutionSpace[row].getOrder(), 
                                     this->rowSolutionSpace[row].getLineInProgress());
+            
             for(int rowCel = 0; rowCel < this->dimensions; rowCel++) {
-                if (tempLIP[rowCel] != this->rowSolutionSpace[rowCel].getLineInProgress()[rowCel]) {
-                    // 
-                    std::cout << "row " << row << std::endl;
-                    printVector(tempLIP);
-                    std::cout << std::endl;
-                    printVector(this->rowSolutionSpace[rowCel].getLineInProgress());
-                    std::cout << std::endl;
+                if (tempLIP[rowCel] != this->rowSolutionSpace[row].getLineInProgress()[rowCel]) {
+                    // std::cout << "row " << row << std::endl;
+                    // printVector(tempLIP);
+                    // std::cout << std::endl;
+                    // printVector(this->rowSolutionSpace[rowCel].getLineInProgress());
+                    // std::cout << std::endl;
+                    // std::cout << rowCel << "|" << this->rowSolutionSpace[row].getOrder() << std::endl;
                     this->columnSolutionSpace[rowCel].setLineInProgressCel(this->rowSolutionSpace[row].getOrder());
                 }
             }
         }
-
-        // this->rowSolutionSpace[i].inductiveSegmentFill();
-        // this->updateSolutionSpace(this->rowSolutionSpace[i].getDirection(), 
-        //                             this->rowSolutionSpace[i].getOrder(), 
-        //                             this->rowSolutionSpace[i].getLineInProgress());
     }
 
     for (uint column = 0; column < this->columnSolutionSpace.size(); column++) {
@@ -84,22 +80,17 @@ void PixelPuzzle::runInductiveFill()
                                     this->columnSolutionSpace[column].getOrder(), 
                                     this->columnSolutionSpace[column].getLineInProgress());
             for(int columnCel = 0; columnCel < this->dimensions; columnCel++) {
-                if (tempLIP[columnCel] != this->columnSolutionSpace[columnCel].getLineInProgress()[columnCel]) {
-                    // 
-                    std::cout << "column " << column << std::endl;
-                    printVector(tempLIP);
-                    std::cout << std::endl;
-                    printVector(this->columnSolutionSpace[columnCel].getLineInProgress());
-                    std::cout << std::endl;
+                if (tempLIP[columnCel] != this->columnSolutionSpace[column].getLineInProgress()[columnCel]) {
+                    // std::cout << "column " << column << std::endl;
+                    // printVector(tempLIP);
+                    // std::cout << std::endl;
+                    // printVector(this->columnSolutionSpace[columnCel].getLineInProgress());
+                    // std::cout << std::endl;
+                    // std::cout << columnCel << "|" << this->columnSolutionSpace[column].getOrder() << std::endl;
                     this->rowSolutionSpace[columnCel].setLineInProgressCel(this->columnSolutionSpace[column].getOrder());
                 }
             }
         }
-
-        // this->columnSolutionSpace[i].inductiveSegmentFill();
-        // this->updateSolutionSpace(this->columnSolutionSpace[i].getDirection(), 
-        //                             this->columnSolutionSpace[i].getOrder(), 
-        //                             this->columnSolutionSpace[i].getLineInProgress());
     }
 }
 
@@ -135,29 +126,29 @@ void PixelPuzzle::printLines()
         std::cout << std::endl;
     }
 
-    std::cout << "\nPrinting Puzzle Solution Space using line class" << std::endl;
-    for (uint i = 0; i < this->rowSolutionSpace.size(); i++) {
-        std::vector<int> liner = this->rowSolutionSpace[i].getLineInProgress();
-        for (uint j = 0; j < liner.size(); j++) {
-            if (liner[j] != -1) {
-                std::cout << " ";
-            }
-            std::cout << liner[j] << " ";
-        }
-        std::cout << std::endl;
-    }
+    // std::cout << "\nPrinting Puzzle Solution Space using line class" << std::endl;
+    // for (uint i = 0; i < this->rowSolutionSpace.size(); i++) {
+    //     std::vector<int> liner = this->rowSolutionSpace[i].getLineInProgress();
+    //     for (uint j = 0; j < liner.size(); j++) {
+    //         if (liner[j] != -1) {
+    //             std::cout << " ";
+    //         }
+    //         std::cout << liner[j] << " ";
+    //     }
+    //     std::cout << std::endl;
+    // }
 
-    std::cout << "\nPrinting Puzzle Solution Space using line class" << std::endl;
-    for (uint i = 0; i < this->columnSolutionSpace.size(); i++) {
-        std::vector<int> liner = this->columnSolutionSpace[i].getLineInProgress();
-        for (uint j = 0; j < liner.size(); j++) {
-            if (liner[j] != -1) {
-                std::cout << " ";
-            }
-            std::cout << liner[j] << " ";
-        }
-        std::cout << std::endl;
-    }
+    // std::cout << "\nPrinting Puzzle Solution Space using line class" << std::endl;
+    // for (uint i = 0; i < this->columnSolutionSpace.size(); i++) {
+    //     std::vector<int> liner = this->columnSolutionSpace[i].getLineInProgress();
+    //     for (uint j = 0; j < liner.size(); j++) {
+    //         if (liner[j] != -1) {
+    //             std::cout << " ";
+    //         }
+    //         std::cout << liner[j] << " ";
+    //     }
+    //     std::cout << std::endl;
+    // }
 }
 
 void PixelPuzzle::printVector(std::vector<int> liner) {

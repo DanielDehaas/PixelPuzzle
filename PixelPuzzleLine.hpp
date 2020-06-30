@@ -27,7 +27,7 @@ public:
     //void setSegmentSolutionSpace(std::vector<std::vector<int> > blocks) {segmentSolutionSpace = blocks;};
 
     void printLineInfo();
-
+    void printLineSolutionSpace();
 
     std::vector<int> inductiveSegmentFill();
 

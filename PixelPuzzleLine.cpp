@@ -149,7 +149,10 @@ void PixelPuzzleLine::printLineInfo()
         std::cout << lineInProgress[i] << " ";
     }
     std::cout << std::endl;
+}
 
+void PixelPuzzleLine::printLineSolutionSpace()
+{
     std::cout << "Line solution space: " << std::endl;
     for (uint i = 0; i < this->segmentSolutionSpace.size(); i++) {
         std::cout << this->segments[i] << ": ";
